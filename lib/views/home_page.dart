@@ -4,7 +4,7 @@ import 'package:flutter_modul_cam_qr_2/constant/app_constant.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  navigateTo(BuildContext context, String routeName ) => Navigator.pushNamed(context, RouteConstant.routeToQrGeneratePage);
+  navigateTo(BuildContext context, String routeName ) => Navigator.pushNamed(context, routeName);
   
   @override
   Widget build(BuildContext context) {

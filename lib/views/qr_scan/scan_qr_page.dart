@@ -100,7 +100,7 @@ class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
   void copyToClipboard(String text) {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('QR code disalin ke clipboard')),
+      const SnackBar(content: Text(LabelTextConstant.txtonCopyingClipBoard)),
     );
   }
 }

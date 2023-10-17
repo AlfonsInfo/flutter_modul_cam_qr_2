@@ -16,4 +16,5 @@ class ButtonTextConstant{
 class LabelTextConstant{
     static const String homePageAppBarTitle = "Modul QR, Camera, Scanner"; 
     static const String scanQrPlaceHolderLabel = "Scan something & click to copy to clipboard!"; 
+    static const String txtonCopyingClipBoard = "QR code disalin ke clipboard";
 }

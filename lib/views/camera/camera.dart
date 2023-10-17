@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modul_cam_qr_2/utils/logging_utils.dart';
 import 'package:flutter_modul_cam_qr_2/views/camera/display_picture.dart';
 
 class CameraView extends StatefulWidget {
@@ -20,6 +21,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future<void> initializeCamera() async {
+    LoggingUtils.logStartFunction("initialize camera".toUpperCase());
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
     _cameraController = CameraController(firstCamera,ResolutionPreset.medium);
@@ -65,6 +67,8 @@ class _CameraViewState extends State<CameraView> {
 
   Future<DisplayPictureScreen?> previewImageResult () async
   {
+    String activity = "PREVIEW IMAGE RESULT";
+    LoggingUtils.logStartFunction(activity);
     try {
       await _initializeCameraFuture;
       final image = await _cameraController.takePicture();
@@ -73,12 +77,13 @@ class _CameraViewState extends State<CameraView> {
         MaterialPageRoute(
           builder: (context) 
           { 
-            debugPrint(image.path);
+            LoggingUtils.logDebugValue("get image on previewImageResult".toUpperCase(),"image.path :  ${image.path}");
             return DisplayPictureScreen(imagePath: image.path);
             },
           ),
       );
     } catch (e) {
+      LoggingUtils.logError(activity, e.toString());
       return null;
     }
     return null;
