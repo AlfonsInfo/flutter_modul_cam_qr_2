@@ -18,7 +18,7 @@ packages:
     source: hosted
     version: "2.1.1"
   camera:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: camera
       sha256: ebebead3d5ec3d148249331d751d462d7e8c98102b8830a9b45ec96a2bd4333f
@@ -185,7 +185,7 @@ packages:
     source: hosted
     version: "1.9.1"
   mobile_scanner:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: mobile_scanner
       sha256: "54dd914e1bb5758b3db7aa02e56d65d80285ba0705e0e5fa5cfbb11e27344c4b"
@@ -193,7 +193,7 @@ packages:
     source: hosted
     version: "3.3.0"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "8829d8a55c13fc0e37127c29fedf290c102f4e40ae94ada574091fe0ff96c917"
@@ -201,7 +201,7 @@ packages:
     source: hosted
     version: "1.8.3"
   path_provider:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "909b84830485dbcd0308edf6f7368bc8fd76afa26a270420f34cabea2a6467a0"
@@ -273,7 +273,7 @@ packages:
     source: hosted
     version: "3.0.1"
   qr_flutter:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: qr_flutter
       sha256: "5095f0fc6e3f71d08adef8feccc8cea4f12eec18a2e31c2e8d82cb6019f4b097"

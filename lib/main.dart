@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modul_cam_qr_2/camera.dart';
-import 'package:flutter_modul_cam_qr_2/qr_generate.dart';
-import 'package:flutter_modul_cam_qr_2/qr_scan.dart';
+import 'package:flutter_modul_cam_qr_2/views/camera/camera.dart';
+import 'package:flutter_modul_cam_qr_2/constant/app_constant.dart';
+import 'package:flutter_modul_cam_qr_2/views/generate_qr/generate_qr_page.dart';
+import 'package:flutter_modul_cam_qr_2/views/home_page.dart';
+import 'package:flutter_modul_cam_qr_2/views/qr_scan/scan_qr_page.dart';
 
 
 
@@ -13,45 +15,15 @@ Future<void> main() async  {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: HomePage(),
       routes: {
-        '/' : (context) => const HomePage(),
-        '/qr_generate': (context) => const GenerateQRPage(),
-        '/qr_scan': (context) => const BarcodeScannerPageView(),
-        '/qr_cam': (context) => CameraView(),
+        RouteConstant.routeToHome : (context) => const HomePage(),
+        RouteConstant.routeToQrGeneratePage : (context) => const GenerateQRPage(),
+        RouteConstant.routeToQrScanPage : (context) => const BarcodeScannerPageView(),
+        RouteConstant.routeToQrCam : (context) => const CameraView(),
       },
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Modul QR, Camera, Scanner'),),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, '/qr_generate');
-            }, child: const Text("Generate QR Code")),
-            ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, '/qr_cam');
-            }, child: const Text("Camera")),
-            ElevatedButton(onPressed: (){
-              Navigator.pushNamed(context, '/qr_scan');
-            }, child: const Text("QR Scanning")),
-          ],
-        ),
-      ),
     );
   }
 }

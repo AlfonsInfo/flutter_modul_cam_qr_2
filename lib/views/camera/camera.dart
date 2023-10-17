@@ -1,14 +1,12 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:flutter_modul_cam_qr_2/views/camera/display_picture.dart';
 
 class CameraView extends StatefulWidget {
+  const CameraView({super.key});
   @override
-  _CameraViewState createState() => _CameraViewState();
+  State<CameraView> createState() => _CameraViewState();
 }
 
 class _CameraViewState extends State<CameraView> {
@@ -24,17 +22,13 @@ class _CameraViewState extends State<CameraView> {
   Future<void> initializeCamera() async {
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
-
-    _cameraController = CameraController(
-      firstCamera,
-      ResolutionPreset.medium,
-    );
-
+    _cameraController = CameraController(firstCamera,ResolutionPreset.medium);
     _initializeCameraFuture = _cameraController.initialize();
     if (mounted) {
       setState(() {});
     }
   }
+
 
   @override
   void dispose() {
@@ -44,7 +38,8 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   Widget build(BuildContext context) {
-    if (_initializeCameraFuture == null || _cameraController == null) {
+    //_cameraController == null
+    if (_initializeCameraFuture == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -61,44 +56,32 @@ class _CameraViewState extends State<CameraView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          try {
-            await _initializeCameraFuture;
-
-            final image = await _cameraController.takePicture();
-
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) { 
-                  debugPrint(image.path);
-                  return DisplayPictureScreen(
-                  imagePath: image.path,
-                );
-                
-                },
-              ),
-            );
-          } catch (e) {
-            print(e);
-          }
-        },
+        onPressed: () async => await previewImageResult(),
         child: const Icon(Icons.camera_alt),
       ),
     );
   }
-}
 
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
 
-  const DisplayPictureScreen({Key? key, required this.imagePath})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
-      body: Image.file(File(imagePath)),
-    );
+  Future<DisplayPictureScreen?> previewImageResult () async
+  {
+    try {
+      await _initializeCameraFuture;
+      final image = await _cameraController.takePicture();
+      if(!mounted) return null;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) 
+          { 
+            debugPrint(image.path);
+            return DisplayPictureScreen(imagePath: image.path);
+            },
+          ),
+      );
+    } catch (e) {
+      return null;
+    }
+    return null;
   }
 }
+
