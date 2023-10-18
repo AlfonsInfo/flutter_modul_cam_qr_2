@@ -13,6 +13,7 @@ class CameraView extends StatefulWidget {
 class _CameraViewState extends State<CameraView> {
   Future<void>? _initializeCameraFuture;
   late CameraController _cameraController;
+  var count = 0;
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _CameraViewState extends State<CameraView> {
     _initializeCameraFuture = _cameraController.initialize();
     if (mounted) {
       setState(() {});
+    LoggingUtils.logEndFunction("success initialize camera".toUpperCase());
     }
   }
 
@@ -67,26 +69,28 @@ class _CameraViewState extends State<CameraView> {
 
   Future<DisplayPictureScreen?> previewImageResult () async
   {
-    String activity = "PREVIEW IMAGE RESULT";
-    LoggingUtils.logStartFunction(activity);
-    try {
-      await _initializeCameraFuture;
-      final image = await _cameraController.takePicture();
-      if(!mounted) return null;
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) 
-          { 
-            LoggingUtils.logDebugValue("get image on previewImageResult".toUpperCase(),"image.path :  ${image.path}");
-            return DisplayPictureScreen(imagePath: image.path);
-            },
-          ),
-      );
-    } catch (e) {
-      LoggingUtils.logError(activity, e.toString());
+      String activity = "PREVIEW IMAGE RESULT";
+      LoggingUtils.logStartFunction(activity);
+      try {
+        await _initializeCameraFuture;
+        final image = await _cameraController.takePicture();
+        if(!mounted) return null;
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) 
+            { 
+              _cameraController.pausePreview();
+              LoggingUtils.logDebugValue("get image on previewImageResult".toUpperCase(),"image.path :  ${image.path}");
+              return DisplayPictureScreen(imagePath: image.path, cameraController: _cameraController,);
+              },
+            ),
+        );
+      } catch (e) {
+        LoggingUtils.logError(activity, e.toString());
+        return null;
+      }
       return null;
-    }
-    return null;
   }
 }
+
 

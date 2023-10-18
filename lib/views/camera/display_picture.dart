@@ -1,20 +1,39 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:flutter_modul_cam_qr_2/utils/logging_utils.dart';
 
 
-class DisplayPictureScreen extends StatelessWidget {
+class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
+  final CameraController cameraController;
 
-  const DisplayPictureScreen({Key? key, required this.imagePath}): super(key: key);
+  const DisplayPictureScreen({Key? key, required this.imagePath, required this.cameraController}): super(key: key);
 
+  @override
+  State<DisplayPictureScreen> createState() => _DisplayPictureScreenState();
+}
+
+class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
+  File? fileResult;
+
+  @override
+  void initState() {
+    fileResult = File(widget.imagePath);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     LoggingUtils.logStartFunction("Build DisplayPictureScreen");
     return Scaffold(
       appBar: AppBar(title: const Text('Display the Picture')),
-      body: Image.file(File(imagePath)),
+      body: WillPopScope(
+        onWillPop: () async {
+        widget.cameraController.resumePreview();
+        return true; // Izinkan kembali ke halaman sebelumnya.
+      },
+        child: Image.file(fileResult!)),
     );
   }
 }
